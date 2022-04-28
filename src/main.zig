@@ -1,9 +1,28 @@
 const std = @import("std");
+const expect = std.testing.expect;
+const expectEqual = std.testing.expectEqual;
+// const mem = std.mem;
 
-pub fn main() anyerror!void {
-    std.log.info("All your codebase are belong to us.", .{});
+test "Hello, Sailor!" {
+    try expect(42 == 42);
 }
 
-test "basic test" {
-    try std.testing.expectEqual(10, 3 + 7);
+fn ZigMap(comptime T: type) type {
+    return struct {
+        hash: i32,
+        value: T,
+    };
+}
+
+test "Can construct generic map leaf" {
+    const m = ZigMap([]const u8){
+        .hash = 1,
+        .value = "dammit",
+    };
+
+    try expectEqual(m.value, "dammit");
+}
+
+pub fn main() void {
+    std.debug.print("{d}\n", .{@TypeOf("blah")});
 }
